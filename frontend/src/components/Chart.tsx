@@ -1,21 +1,57 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useEffect, useState } from 'react';
 
-const data = [
-  { name: 'Jan', value: 30, real: 1000 },
-  { name: 'Feb', value: 50, real: 60 },
-  { name: 'Mär', value: 40, real: 70 },
-];
+interface Measurement {
+  id: number;
+  timestamp: string;      // ISO-String vom Backend
+  temperature: number;
+  humidity: number;
+  pressure: number;
+  light: number;
+}
+
+interface ChartPoint {
+  timestamp: string;      // direkt vom Backend
+  temperature: number;
+}
+
+
+
+
 
 export default function Chart() {
+const [data, setData] = useState<ChartPoint[]>([]);    
+
+  useEffect(() => {
+    fetch('http://localhost:8000/measurements')
+      .then(res => res.json())
+      .then(json => {
+        // Direkt übernehmen, Timestamp bleibt String
+        const chartData: ChartPoint[] = json.measurements.map((m: Measurement) => ({
+          timestamp: m.timestamp,
+          temperature: m.temperature
+        }));
+        setData(chartData);
+      })
+      .catch(console.error);
+  }, []);
   return (
     <div className="w-full h-64">
       <ResponsiveContainer>
         <LineChart data={data}>
-          <XAxis dataKey="name" label={{value: 'Zeit', position: 'insideRight', dy: 15, dx: 10, style: {fontSize: 12}}}/>
+          <XAxis dataKey="timestamp" tickFormatter={(ts) => {
+              // Format: HH:mm oder Tag + Stunde
+              const d = new Date(ts);
+              return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+            }} label={{value: 'Zeit', position: 'insideRight', dy: 15, dx: 10, style: {fontSize: 12}}}/>
           <YAxis label={{ value: 'Temperatur °C', angle: -90, position: 'middle', style: { fontSize: 12 }, dx: -15 }}/>
-          <Tooltip />
+          <Tooltip labelFormatter={(ts) => {
+              // Tooltip zeigt komplette Zeit
+              const d = new Date(ts);
+              return d.toLocaleString();
+            }}/>
           <Legend />
-          <Line type="monotone" dataKey="value" stroke="#3b82f6" name="Temperatur °C" />
+          <Line type="monotone" dataKey="temperature" stroke="#3b82f6" name="Temperatur °C" />
           {/* <Line type="monotone" dataKey="real" stroke="#f63b3b" name="Referenzdaten" /> */}
         </LineChart>
       </ResponsiveContainer>
