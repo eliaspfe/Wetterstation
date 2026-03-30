@@ -1,6 +1,8 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import Stats from '../components/Dataset_Infos'
+import Description from '../components/Description'
 
 
 const navigation = [
@@ -15,6 +17,17 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 }
 
 export default function Download() {
+    async function downloadExcel() {
+    const response = await fetch("http://localhost:8000/download_excel");
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "measurements.xlsx";
+    a.click();
+    window.URL.revokeObjectURL(url);
+    }
   return (
     <>
       <div className="min-h-full">
@@ -91,10 +104,24 @@ export default function Download() {
           </div>
         </header> */}
         <main>
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            
-            {/* Your content */}
-            
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 " >
+                <Stats />
+                <Description />
+                    <div className="mt-10">
+                    <button onClick={downloadExcel}
+                        type="submit"
+                        className="flex items-center justify-center w-96 mx-auto rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                    >
+                        <svg
+                        className="fill-current w-4 h-4 mr-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        >
+                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                        </svg>
+                        Download
+                    </button>
+                    </div>
             </div>
         </main>
       </div>

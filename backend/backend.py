@@ -3,9 +3,9 @@ import duckdb
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# import pandas as pd
-# from fastapi.responses import StreamingResponse
-# import io
+import pandas as pd
+from fastapi.responses import StreamingResponse
+import io
 
 DB_PATH = "wetterstation.duckdb"
 
@@ -106,29 +106,29 @@ def get_measurements():
     #             "id": 2, ...
 
 
-# @app.get("/download_excel")
-# def download_excel():
-#     conn = duckdb.connect(DB_PATH)
-#     result = conn.execute("SELECT * FROM measurements ORDER BY timestamp").fetchall()
-#     conn.close()
+@app.get("/download_excel")
+def download_excel():
+    conn = duckdb.connect(DB_PATH)
+    result = conn.execute("SELECT * FROM measurements ORDER BY timestamp").fetchall()
+    conn.close()
 
-#     # Umwandeln in CSV-Format
-#     csv_data = "id,timestamp,temperature,humidity,pressure,light\n"
-#     for row in result:
-#         csv_data += f"{row[0]},{row[1]},{row[2]},{row[3]},{row[4]},{row[5]}\n"
+    # Umwandeln in CSV-Format
+    csv_data = "id,timestamp,temperature,humidity,pressure,light\n"
+    for row in result:
+        csv_data += f"{row[0]},{row[1]},{row[2]},{row[3]},{row[4]},{row[5]}\n"
 
-#     # create a excel file from the csv data and return it as a response
+    # create a excel file from the csv data and return it as a response
 
-#     excel_file = io.BytesIO()
+    excel_file = io.BytesIO()
 
-#     df = pd.read_csv(io.StringIO(csv_data))
-#     df.to_excel(excel_file, index=False)
-#     excel_file.seek(0)
-#     return StreamingResponse(
-#         excel_file,
-#         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-#         headers={"Content-Disposition": "attachment; filename=measurements.xlsx"},
-#     )
+    df = pd.read_csv(io.StringIO(csv_data))
+    df.to_excel(excel_file, index=False)
+    excel_file.seek(0)
+    return StreamingResponse(
+        excel_file,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=measurements.xlsx"},
+    )
 
 
 class Measurement(BaseModel):
@@ -159,6 +159,43 @@ def upload_measurement(data: Measurement):
     #     "pressure": 1013.25,
     #     "light": 300
     # }
+
+    # stats
+
+
+#     const stats = [
+#   { id: 1, name: 'Transactions every 24 hours', value: '44 million' },
+#   { id: 2, name: 'Assets under holding', value: '$119 trillion' },
+#   { id: 3, name: 'New users annually', value: '46,000' },
+# ]
+
+
+@app.get("/stats")
+def get_stats():
+    # Anzahl der Messsungen, Datun der letzten Messung, Anzahl Spalten
+    conn = duckdb.connect(DB_PATH)
+    count = conn.execute("SELECT COUNT(*) FROM measurements").fetchone()[0]
+    last_timestamp = conn.execute("SELECT MAX(timestamp) FROM measurements").fetchone()[
+        0
+    ]
+    column_count = conn.execute(
+        "SELECT COUNT(*) FROM information_schema.columns WHERE table_name='measurements'"
+    ).fetchone()[0]
+    conn.close()
+
+    return {
+        "stats": [
+            {"id": 1, "name": "Total Measurements", "value": str(count)},
+            {
+                "id": 2,
+                "name": "Last Measurement Timestamp",
+                "value": (
+                    last_timestamp.strftime("%d.%m.%Y") if last_timestamp else None
+                ),
+            },
+            {"id": 3, "name": "Number of Columns", "value": str(column_count)},
+        ]
+    }
 
 
 if __name__ == "__main__":
