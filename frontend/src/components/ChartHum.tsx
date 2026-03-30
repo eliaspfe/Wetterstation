@@ -20,7 +20,7 @@ export default function ChartHum() {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/measurements')
+    fetch('http://backend:8000/measurements')
       .then(res => res.json())
       .then(json => {
         // Direkt übernehmen, Timestamp bleibt String

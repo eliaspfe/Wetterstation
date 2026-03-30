@@ -12,7 +12,7 @@ interface Stats {
 export default function Stats() {
     const [stats, setStats] = useState<Stats[]>([]);    
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/stats')
+        fetch('http://backend:8000/stats')
           .then(res => res.json())
             .then(json => {
                 setStats(json.stats);
