@@ -1,13 +1,14 @@
+import { Routes, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import Docs from './pages/Docs'
+import Download from './pages/Download'
 
-import './App.css'
-
-function App() {
-
+export default function App() {
   return (
-    <>
-      <div className='text-[50px]'>Hello World</div>
-    </>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/download" element={<Download />} />
+      <Route path="/docs" element={<Docs />} />
+    </Routes>
   )
 }
-
-export default App

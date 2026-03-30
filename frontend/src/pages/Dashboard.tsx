@@ -1,19 +1,14 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Download', href: '#', current: false },
-  { name: 'Dokumentation', href: '#', current: false },
-]
-const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Download', href: '/download', current: false },
+  { name: 'Dokumentation', href: '/docs', current: false },
 ]
 
-// interface User {
+// interface User {x
 //     name: string
 //     email: string
 //     imageUrl: string
@@ -34,7 +29,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function Dashboard() {
   return (
     <>
       <div className="min-h-full">
@@ -52,9 +47,9 @@ export default function Example() {
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
                           item.current
@@ -64,7 +59,7 @@ export default function Example() {
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -101,21 +96,7 @@ export default function Example() {
                 </DisclosureButton>
               ))}
             </div>
-            <div className="border-t border-white/10 pt-4 pb-3">
-              
-              <div className="mt-3 space-y-1 px-2">
-                {userNavigation.map((item) => (
-                  <DisclosureButton
-                    key={item.name}
-                    as="a"
-                    href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                  >
-                    {item.name}
-                  </DisclosureButton>
-                ))}
-              </div>
-            </div>
+            
           </DisclosurePanel>
         </Disclosure>
 
