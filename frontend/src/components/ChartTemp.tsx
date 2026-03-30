@@ -16,7 +16,7 @@ interface ChartPoint {
 }
 
 
-export default function Chart() {
+export default function ChartTemp() {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
   useEffect(() => {

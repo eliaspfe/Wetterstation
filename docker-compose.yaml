@@ -9,6 +9,8 @@ services:
       - "8000:8000"
     networks:
       - app-network
+    volumes:
+      - db-data:/app
 
   frontend:
     build:
@@ -22,3 +24,5 @@ services:
 networks:
   app-network:
     driver: bridge
+volumes:
+  db-data:

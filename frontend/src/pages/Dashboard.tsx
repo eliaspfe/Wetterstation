@@ -1,7 +1,10 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
-import Chart from '../components/Chart'
+import ChartTemp from '../components/ChartTemp'
+import ChartHum from '../components/ChartHum'
+import ChartLight from '../components/ChartLight'
+import ChartPres from '../components/ChartPres'
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
@@ -94,20 +97,20 @@ export default function Dashboard() {
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-800 p-4 rounded-xl shadow">
-                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
-                <Chart />
+                <h2 className="text-gray-300 font-semibold mb-2">Temperatur nach Zeit</h2>
+                <ChartTemp />
               </div>
               <div className="bg-gray-800 p-4 rounded-xl shadow">
-                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
-                <Chart />
+                <h2 className="text-gray-300 font-semibold mb-2">Luftfeuchtigkeit nach Zeit</h2>
+                <ChartHum />
               </div>
                 <div className="bg-gray-800 p-4 rounded-xl shadow">
-                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
-                <Chart />
+                <h2 className="text-gray-300 font-semibold mb-2">Helligkeit nach Zeit</h2>
+                <ChartLight />
               </div>
                 <div className="bg-gray-800 p-4 rounded-xl shadow">
-                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
-                <Chart />
+                <h2 className="text-gray-300 font-semibold mb-2">Luftdruck nach Zeit</h2>
+                <ChartPres />
               </div>
             </div>
 

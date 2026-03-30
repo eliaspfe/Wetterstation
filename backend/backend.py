@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 import duckdb
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+# import pandas as pd
+# from fastapi.responses import StreamingResponse
+# import io
 
 DB_PATH = "wetterstation.duckdb"
 
@@ -51,7 +56,7 @@ def sample_inserts():
 
 app = FastAPI()
 init_db()
-sample_inserts()
+# sample_inserts()
 origins = ["http://localhost:5173"]
 
 app.add_middleware(
@@ -101,18 +106,47 @@ def get_measurements():
     #             "id": 2, ...
 
 
+# @app.get("/download_excel")
+# def download_excel():
+#     conn = duckdb.connect(DB_PATH)
+#     result = conn.execute("SELECT * FROM measurements ORDER BY timestamp").fetchall()
+#     conn.close()
+
+#     # Umwandeln in CSV-Format
+#     csv_data = "id,timestamp,temperature,humidity,pressure,light\n"
+#     for row in result:
+#         csv_data += f"{row[0]},{row[1]},{row[2]},{row[3]},{row[4]},{row[5]}\n"
+
+#     # create a excel file from the csv data and return it as a response
+
+#     excel_file = io.BytesIO()
+
+#     df = pd.read_csv(io.StringIO(csv_data))
+#     df.to_excel(excel_file, index=False)
+#     excel_file.seek(0)
+#     return StreamingResponse(
+#         excel_file,
+#         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#         headers={"Content-Disposition": "attachment; filename=measurements.xlsx"},
+#     )
+
+
+class Measurement(BaseModel):
+    temperature: float
+    humidity: float
+    pressure: float
+    light: int
+
+
 @app.post("/upload")
-def upload_measurement(
-    temperature: float, humidity: float, pressure: float, light: int
-):
-    # Insert a new measurement into the database
+def upload_measurement(data: Measurement):
     conn = duckdb.connect(DB_PATH)
     conn.execute(
         """
         INSERT INTO measurements (timestamp, temperature, humidity, pressure, light)
         VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?)
     """,
-        (temperature, humidity, pressure, light),
+        (data.temperature, data.humidity, data.pressure, data.light),
     )
     conn.close()
     return {"message": "Measurement uploaded successfully"}
