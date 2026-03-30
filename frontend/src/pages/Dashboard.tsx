@@ -1,6 +1,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import Chart from '../components/Chart'
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
@@ -8,22 +9,6 @@ const navigation = [
   { name: 'Dokumentation', href: '/docs', current: false },
 ]
 
-// interface User {x
-//     name: string
-//     email: string
-//     imageUrl: string
-// }
-
-// interface NavItem {
-//     name: string
-//     href: string
-//     current: boolean
-// }
-
-// interface UserNavItem {
-//     name: string
-//     href: string
-// }
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ')
@@ -107,9 +92,25 @@ export default function Dashboard() {
         </header> */}
         <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            
-            {/* Your content */}
-            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
+                <Chart />
+              </div>
+              <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
+                <Chart />
+              </div>
+                <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
+                <Chart />
+              </div>
+                <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <h2 className="text-gray-300 font-semibold mb-2">Verlauf</h2>
+                <Chart />
+              </div>
+            </div>
+
             </div>
         </main>
       </div>

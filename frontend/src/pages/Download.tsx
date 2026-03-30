@@ -9,22 +9,6 @@ const navigation = [
   { name: 'Dokumentation', href: '/docs', current: false },
 ]
 
-// interface User {x
-//     name: string
-//     email: string
-//     imageUrl: string
-// }
-
-// interface NavItem {
-//     name: string
-//     href: string
-//     current: boolean
-// }
-
-// interface UserNavItem {
-//     name: string
-//     href: string
-// }
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ')
