@@ -39,11 +39,11 @@ def sample_inserts():
         ('2026-03-30 03:00:00', 26.0, 58.0, 1012.80, 320),
         ('2026-03-30 04:00:00', 24.8, 62.0, 1013.50, 280),
         ('2026-03-30 05:00:00', 27.2, 55.0, 1011.90, 350),
-        ('2026-03-30 06:00:00', 23.5, 65.0, 1014.00, 250),
+        ('2026-03-30 06:00:45', 23.5, 65.0, 1014.00, 250),
         ('2026-03-30 07:00:00', 22.0, 70.0, 1014.50, 200),
         ('2026-03-30 08:00:00', 28.0, 50.0, 1010.75, 400),
-        ('2026-03-30 09:00:00', 24.0, 60.0, 1013.00, 300),
-        ('2026-03-30 10:00:00', 26.5, 57.0, 1012.25, 320);
+        ('2026-03-30 09:00:32', 24.0, 60.0, 1013.00, 300),
+        ('2026-03-30 09:00:33', 26.5, 57.0, 1012.25, 320);
     """
     )
     conn.close()
@@ -51,7 +51,7 @@ def sample_inserts():
 
 app = FastAPI()
 init_db()
-# sample_inserts()
+sample_inserts()
 origins = ["http://localhost:5173"]
 
 app.add_middleware(
@@ -66,7 +66,7 @@ app.add_middleware(
 @app.get("/measurements")
 def get_measurements():
     conn = duckdb.connect(DB_PATH)
-    result = conn.execute("SELECT * FROM measurements").fetchall()
+    result = conn.execute("SELECT * FROM measurements ORDER BY timestamp").fetchall()
     conn.close()
 
     # Umwandeln in dicts und timestamp in ms

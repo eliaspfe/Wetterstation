@@ -16,9 +16,6 @@ interface ChartPoint {
 }
 
 
-
-
-
 export default function Chart() {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
@@ -42,13 +39,13 @@ const [data, setData] = useState<ChartPoint[]>([]);
           <XAxis dataKey="timestamp" tickFormatter={(ts) => {
               // Format: HH:mm oder Tag + Stunde
               const d = new Date(ts);
-              return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+              return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
             }} label={{value: 'Zeit', position: 'insideRight', dy: 15, dx: 10, style: {fontSize: 12}}}/>
           <YAxis label={{ value: 'Temperatur °C', angle: -90, position: 'middle', style: { fontSize: 12 }, dx: -15 }}/>
           <Tooltip labelFormatter={(ts) => {
               // Tooltip zeigt komplette Zeit
               const d = new Date(ts);
-              return d.toLocaleString();
+              return d.toLocaleString("de-DE");
             }}/>
           <Legend />
           <Line type="monotone" dataKey="temperature" stroke="#3b82f6" name="Temperatur °C" />
