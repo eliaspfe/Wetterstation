@@ -20,7 +20,7 @@ export default function ChartPres() {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
   useEffect(() => {
-    fetch('http://backend:8000/measurements')
+    fetch('/measurements')
       .then(res => res.json())
       .then(json => {
         // Direkt übernehmen, Timestamp bleibt String
