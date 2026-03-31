@@ -18,7 +18,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 
 export default function Download() {
     async function downloadExcel() {
-    const response = await fetch("http://localhost:8000/download_excel");
+    const response = await fetch("/download_excel");
     const blob = await response.blob();
 
     const url = window.URL.createObjectURL(blob);
