@@ -5,6 +5,7 @@ import ChartTemp from '../components/ChartTemp'
 import ChartHum from '../components/ChartHum'
 import ChartLight from '../components/ChartLight'
 import ChartPres from '../components/ChartPres'
+import { useState } from 'react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
@@ -18,6 +19,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 }
 
 export default function Dashboard() {
+  const [trunc, setTrunc] = useState("second");
   return (
     <>
       <div className="min-h-full">
@@ -50,11 +52,25 @@ export default function Dashboard() {
                       </Link>
                     ))}
                   </div>
+                  
                 </div>
+
               </div>
+                <select value={trunc} onChange={(e) => setTrunc(e.target.value)} className="bg-gray-700 text-white p-2 rounded">
+                  <option value="second">Rohdaten</option>
+                  <option value="minute">1 Minute (Ø)</option>
+                  <option value="hour">1 Stunde (Ø)</option>
+                  <option value="day">1 Tag (Ø)</option>
+                  <option value="week">1 Woche (Ø)</option>
+                  <option value="month">1 Monat (Ø)</option>
+                </select>
+              </div>
+              
+              <div className="mb-4">
               <div className="hidden md:block">
                 
               </div>
+              
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
@@ -98,19 +114,19 @@ export default function Dashboard() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-800 p-4 rounded-xl shadow">
                 <h2 className="text-gray-300 font-semibold mb-2">Temperatur nach Zeit</h2>
-                <ChartTemp />
+                <ChartTemp trunc={trunc}/>
               </div>
               <div className="bg-gray-800 p-4 rounded-xl shadow">
                 <h2 className="text-gray-300 font-semibold mb-2">Luftfeuchtigkeit nach Zeit</h2>
-                <ChartHum />
+                <ChartHum trunc={trunc}/>
               </div>
                 <div className="bg-gray-800 p-4 rounded-xl shadow">
                 <h2 className="text-gray-300 font-semibold mb-2">Helligkeit nach Zeit</h2>
-                <ChartLight />
+                <ChartLight trunc={trunc}/>
               </div>
                 <div className="bg-gray-800 p-4 rounded-xl shadow">
                 <h2 className="text-gray-300 font-semibold mb-2">Luftdruck nach Zeit</h2>
-                <ChartPres />
+                <ChartPres trunc={trunc}/>
               </div>
             </div>
 

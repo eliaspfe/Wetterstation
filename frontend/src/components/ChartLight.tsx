@@ -15,23 +15,26 @@ interface ChartPoint {
   light: number;
 }
 
+interface Props {
+  trunc: string; // "second", "minute", "hour", "day", "week", "month"
+}
 
-export default function ChartLight() {
+
+export default function ChartLight( { trunc }: Props) {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
-  useEffect(() => {
-    fetch('/measurements')
-      .then(res => res.json())
-      .then(json => {
-        // Direkt übernehmen, Timestamp bleibt String
-        const chartData: ChartPoint[] = json.measurements.map((m: Measurement) => ({
-          timestamp: m.timestamp,
-          light: m.light
-        }));
-        setData(chartData);
-      })
-      .catch(console.error);
-  }, []);
+useEffect(() => {
+  fetch(`/measurements?trunc=${trunc}`)
+    .then(res => res.json())
+    .then(json => {
+      const chartData: ChartPoint[] = json.measurements.map((m: Measurement) => ({
+        timestamp: m.timestamp,
+        light: m.light
+      }));
+      setData(chartData);
+    })
+    .catch(console.error);
+}, [trunc]);
   return (
     <div className="w-full h-64">
       <ResponsiveContainer>

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 import duckdb
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -7,7 +7,7 @@ import pandas as pd
 from fastapi.responses import StreamingResponse
 import io
 
-DB_PATH = "wetterstation.duckdb"
+DB_PATH = "data/wetterstation.duckdb"
 
 
 def init_db():
@@ -25,9 +25,6 @@ def init_db():
             pressure DOUBLE,
             light integer
         );
-
-        
-
 
     """
     )
@@ -69,26 +66,41 @@ app.add_middleware(
 
 
 @app.get("/measurements")
-def get_measurements():
+def get_measurements(
+    trunc: str = Query("hour", description="second, minute, hour, day, week, month")
+):
     conn = duckdb.connect(DB_PATH)
-    result = conn.execute("SELECT * FROM measurements ORDER BY timestamp").fetchall()
+
+    query = f"""
+            SELECT
+                MIN(id) AS id,
+                DATE_TRUNC('{trunc}', timestamp) AS ts,
+                EPOCH_MS(DATE_TRUNC('{trunc}', timestamp) AT TIME ZONE 'Europe/Berlin') AS ts_ms,
+                AVG(temperature) AS temperature,
+                AVG(humidity) AS humidity,
+                AVG(pressure) AS pressure,
+                AVG(light) AS light
+            FROM measurements
+            GROUP BY ts
+            ORDER BY ts
+        """
+
+    result = conn.execute(query).fetchall()
     conn.close()
 
-    # Umwandeln in dicts und timestamp in ms
     measurements = []
     for row in result:
-        # row: (id, timestamp, temperature, humidity, pressure, light)
-        ts = int(row[1].timestamp() * 1000)  # timestamp in ms
         measurements.append(
             {
                 "id": row[0],
-                "timestamp": ts,
-                "temperature": row[2],
-                "humidity": row[3],
-                "pressure": row[4],
-                "light": row[5],
+                "timestamp": row[2],  # bereits ms!
+                "temperature": row[3],
+                "humidity": row[4],
+                "pressure": row[5],
+                "light": row[6],
             }
         )
+
     return {"measurements": measurements}
 
     # example response:

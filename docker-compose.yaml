@@ -10,7 +10,7 @@ services:
     networks:
       - app-network
     volumes:
-      - db-data:/app
+      - db-data:/app/data
 
   frontend:
     build:

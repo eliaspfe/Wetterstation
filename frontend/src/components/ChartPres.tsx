@@ -15,23 +15,26 @@ interface ChartPoint {
   temperature: number;
 }
 
+interface Props {
+  trunc: string; // "second", "minute", "hour", "day", "week", "month"
+}
 
-export default function ChartPres() {
+
+export default function ChartPres( { trunc }: Props) {
 const [data, setData] = useState<ChartPoint[]>([]);    
 
-  useEffect(() => {
-    fetch('/measurements')
-      .then(res => res.json())
-      .then(json => {
-        // Direkt übernehmen, Timestamp bleibt String
-        const chartData: ChartPoint[] = json.measurements.map((m: Measurement) => ({
-          timestamp: m.timestamp,
-          pressure: m.pressure
-        }));
-        setData(chartData);
-      })
-      .catch(console.error);
-  }, []);
+useEffect(() => {
+  fetch(`/measurements?trunc=${trunc}`)
+    .then(res => res.json())
+    .then(json => {
+      const chartData: ChartPoint[] = json.measurements.map((m: Measurement) => ({
+        timestamp: m.timestamp,
+        pressure: m.pressure
+      }));
+      setData(chartData);
+    })
+    .catch(console.error);
+}, [trunc]);
   return (
     <div className="w-full h-64">
       <ResponsiveContainer>

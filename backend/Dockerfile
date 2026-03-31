@@ -13,9 +13,9 @@ WORKDIR /app
 #     libxcb1 \
 #     poppler-utils \
 #     && rm -rf /var/lib/apt/lists/*
-COPY backend.py .
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+COPY backend.py .
 
 EXPOSE 8000
 
