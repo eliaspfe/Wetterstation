@@ -6,6 +6,7 @@ import ChartHum from '../components/ChartHum'
 import ChartLight from '../components/ChartLight'
 import ChartPres from '../components/ChartPres'
 import { useState } from 'react';
+import DeleteModal from '../components/DeleteModal'
 
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
@@ -56,14 +57,7 @@ export default function Dashboard() {
                 </div>
 
               </div>
-                <select value={trunc} onChange={(e) => setTrunc(e.target.value)} className="bg-gray-700 text-white p-2 rounded">
-                  <option value="second">Rohdaten</option>
-                  <option value="minute">1 Minute (Ø)</option>
-                  <option value="hour">1 Stunde (Ø)</option>
-                  <option value="day">1 Tag (Ø)</option>
-                  <option value="week">1 Woche (Ø)</option>
-                  <option value="month">1 Monat (Ø)</option>
-                </select>
+                
               </div>
               
               <div className="mb-4">
@@ -111,6 +105,59 @@ export default function Dashboard() {
         </header> */}
         <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <div className="bg-gray-800 p-4 rounded-xl shadow gap-4 mb-4">
+                <h2 className="text-gray-300 font-semibold mb-2">Einstellungen</h2>
+                  <div className="grid grid-cols-8 gap-4">
+                    <div className="relative inline-block">
+                      <select
+                        value={trunc}
+                        onChange={(e) => setTrunc(e.target.value)}
+                        className="
+                          appearance-none
+                          rounded-md
+                          bg-white/10
+                          px-2.5
+                          py-1.5
+                          pr-8
+                          text-sm
+                          font-semibold
+                          text-white
+                          inset-ring
+                          inset-ring-white/5
+                          hover:bg-white/20
+                          focus:outline-none
+                          focus:ring-2
+                          focus:ring-white/20
+                          cursor-default
+                          leading-5
+                        "
+                      >
+                        <option value="second" className="bg-gray-700 text-white">Rohdaten</option>
+                        <option value="minute" className="bg-gray-700 text-white">1 Minute (Ø)</option>
+                        <option value="hour" className="bg-gray-700 text-white">1 Stunde (Ø)</option>
+                        <option value="day" className="bg-gray-700 text-white">1 Tag (Ø)</option>
+                        <option value="week" className="bg-gray-700 text-white">1 Woche (Ø)</option>
+                        <option value="month" className="bg-gray-700 text-white">1 Monat (Ø)</option>
+                      </select>
+
+                      {/* cleaner Chevron wie im Screenshot */}
+                      <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center">
+                        <svg
+                          className="h-4 w-4 text-white/90"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M6 8l4 4 4-4" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div><DeleteModal/></div>
+                  </div>
+              </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-800 p-4 rounded-xl shadow">
                 <h2 className="text-gray-300 font-semibold mb-2">Temperatur nach Zeit</h2>

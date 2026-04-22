@@ -210,6 +210,14 @@ def get_stats():
     }
 
 
+@app.delete("/delete_all")
+def delete_all_measurements():
+    conn = duckdb.connect(DB_PATH)
+    conn.execute("DELETE FROM measurements")
+    conn.close()
+    return {"message": "All measurements deleted successfully"}
+
+
 if __name__ == "__main__":
     # Run the FastAPI app
     import uvicorn
