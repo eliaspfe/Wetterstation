@@ -106,7 +106,7 @@ const technologies = [
         "Pandas ist eine Python Bibliothek und wird genutzt, um Messdaten als Excel-Datei zu exportieren.",
       usage: [
         "CSV / Excel Verarbeitung",
-        "Exprort von Messdaten",
+        "Export von Messdaten",
       ],
     },
     {
@@ -137,7 +137,7 @@ const technologies = [
       name: "Raspberry Pi 5",
       category: "Server",
       description:
-        "Der Raspberry Pi 5 dient als zentrale Steuereinheit der Wetterstation, auf dem die Sensoren angeschlossen und die Software ausgeführt wird.",
+        "Der Raspberry Pi 5 dient als zentrale Server-Hardware, auf der die Backend-Logik, Datenbank und die Benutzeroberfläche gehostet werden.",
       usage: [
         "Server für die Wetterstation",
         "Speicherung der Daten",
@@ -173,7 +173,7 @@ export default function Docs() {
                 <div className="shrink-0">
                   <img
                     alt="Wetterstation"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="/public/mond.png"
                     className="size-8"
                   />
                 </div>

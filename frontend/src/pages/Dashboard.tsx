@@ -31,7 +31,7 @@ export default function Dashboard() {
                 <div className="shrink-0">
                   <img
                     alt="Wetterstation"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                    src="/public/mond.png"
                     className="size-8"
                   />
                 </div>
