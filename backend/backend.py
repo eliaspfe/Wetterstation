@@ -6,6 +6,7 @@ from pydantic import BaseModel
 import pandas as pd
 from fastapi.responses import StreamingResponse
 import io
+import os
 
 DB_PATH = "data/wetterstation.duckdb"
 
@@ -13,8 +14,7 @@ DB_PATH = "data/wetterstation.duckdb"
 def init_db():
     # Initialize the DuckDB database and create the table if it doesn't exist
     conn = duckdb.connect(DB_PATH)
-    conn.execute(
-        """
+    conn.execute("""
         CREATE SEQUENCE IF NOT EXISTS measure_id START 1;
 
         CREATE TABLE IF NOT EXISTS measurements (
@@ -26,15 +26,13 @@ def init_db():
             light integer
         );
 
-    """
-    )
+    """)
     conn.close()
 
 
 def sample_inserts():
     conn = duckdb.connect(DB_PATH)
-    conn.execute(
-        """
+    conn.execute("""
         INSERT INTO measurements (timestamp, temperature, humidity, pressure, light)
         VALUES 
         ('2026-03-30 02:00:00', 25.5, 60.0, 1013.25, 300),
@@ -46,12 +44,12 @@ def sample_inserts():
         ('2026-03-30 08:00:00', 28.0, 50.0, 1010.75, 400),
         ('2026-03-30 09:00:32', 24.0, 60.0, 1013.00, 300),
         ('2026-03-30 09:00:33', 26.5, 57.0, 1012.25, 320);
-    """
-    )
+    """)
     conn.close()
 
 
 app = FastAPI()
+os.mkdir("data") if not os.path.exists("data") else None
 init_db()
 # sample_inserts()
 origins = ["http://localhost:5173"]

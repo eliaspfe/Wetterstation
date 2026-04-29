@@ -9,6 +9,154 @@ const navigation = [
   { name: 'Dokumentation', href: '/docs', current: true },
 ]
 
+const programmingLanguages = [
+
+  {
+    name: "TypeScript (React)",
+    category: "Frontend",
+    description:
+      "TypeScript wird für die Entwicklung der Benutzeroberfläche mit React verwendet, um eine typsichere und wartbare Codebasis zu gewährleisten.",
+    usage: [ 
+      "Entwicklung von React-Komponenten",
+      "State Management",
+      "Interaktion mit Backend-APIs",
+    ],
+  },
+  { name: "HTML/CSS", 
+    category: "Frontend", 
+    description: "HTML und CSS werden für die Strukturierung und das Styling der Benutzeroberfläche verwendet.", 
+    usage: [
+      "Layout und Design", 
+      "Webentwicklung"
+    ], 
+  },
+  {
+    name: "Python",
+    category: "Backend",
+    description:
+      "Python wird für die Backend-Logik verwendet, um Daten zu verarbeiten, API-Endpunkte bereitzustellen und die Datenbank zu verwalten.",
+    usage: [
+      "Serverlogik und Datenverarbeitung",
+      "API-Entwicklung mit FastAPI",
+      "Datenbankinteraktion mit DuckDB",
+    ],
+  },
+    {
+    name: "SQL",
+    category: "Datenbank",
+    description:
+      "SQL wird für die Abfrage und Verwaltung der Daten in der DuckDB-Datenbank verwendet.",
+    usage: [
+      "Datenanalyse und -aggregation",
+      "Abfrage von Messdaten",
+      "Erstellung von Datenbankstrukturen",
+    ],
+  },
+];
+
+const technologies = [
+    {
+      name: "React",
+      category: "Frontend",
+      description:
+        "React wird für die Benutzeroberfläche verwendet. Komponentenbasierter Aufbau sorgt für wartbaren und wiederverwendbaren Code.",
+      usage: [
+        "Routing zwischen Seiten",
+        "Dynamische UI-Komponenten",
+        "Aktualisierung der Anzeige basierend auf Benutzereingaben und Datenänderungen",
+      ],
+    },
+    {
+      name: "Recharts",
+      category: "Frontend",
+      description:
+        "TypeScript-Bibliothek für die Erstellung von interaktiven Diagrammen und Grafiken im Dashboard.",
+      usage: [
+        "Darstellung von Zeitreihen-Diagrammen für Sensorwerte",
+        "Interaktive Visualisierungen",
+        "Anpassbare Charts",
+      ],
+    },
+    {
+      name: "Tailwind CSS",
+      category: "Frontend",
+      description:
+        "Tailwind CSS wird für modernes, schnelles und responsives Styling eingesetzt.",
+      usage: [
+        "Responsive Layouts",
+        "Vorlagen UI-Komponenten",
+        "Spacing / Typography",
+      ],
+    },
+    {
+      name: "FastAPI",
+      category: "Backend",
+      description:
+        "FastAPI ist eine Python Bibliothek und stellt API-Endpunkte bereit, wodurch Client Anfragen verarbeitet werden können.",
+      usage: [
+        "Schnittstelle zwischen Frontend, Datenbank und Wetterstation",
+        "API-Endpunkte",
+        "Fungiert als Server",
+      ],
+    },
+    {
+      name: "Pandas",
+      category: "Backend",
+      description:
+        "Pandas ist eine Python Bibliothek und wird genutzt, um Messdaten als Excel-Datei zu exportieren.",
+      usage: [
+        "CSV / Excel Verarbeitung",
+        "Exprort von Messdaten",
+      ],
+    },
+    {
+      name: "DuckDB",
+      category: "Backend",
+      description:
+        "DuckDB ist eine spaltenorientierte Datenbank, die für die Speicherung und Abfrage der Messdaten verwendet wird.",
+      usage: [
+        "Speicherung der Sensordaten",
+        "Schnelle lokale Datenbank",
+      ],
+    },
+    {
+      name: "Docker",
+      category: "Bereitstellung",
+      description:
+        "Docker wird verwendet, um die Anwendung in Containern bereitzustellen, was die Portabilität und Skalierbarkeit verbessert.",
+      usage: [
+        "Containerisierung der Anwendung",
+        "Einfaches Deployment auf verschiedenen Geräten",
+        "Docker Volumes für persistente Datenhaltung",
+      ],
+    },
+  ];
+
+  const hardware = [
+    {
+      name: "Raspberry Pi 5",
+      category: "Server",
+      description:
+        "Der Raspberry Pi 5 dient als zentrale Steuereinheit der Wetterstation, auf dem die Sensoren angeschlossen und die Software ausgeführt wird.",
+      usage: [
+        "Server für die Wetterstation",
+        "Speicherung der Daten",
+        "Ausführung der Docker Container",
+      ],
+    },
+    {
+      name: "ESP-32",
+      category: "Mikrocontroller",
+      description:
+        "Der ESP-32 ist ein Mikrocontroller, der für die Erfassung von Sensordaten und die Kommunikation mit dem Raspberry Pi verwendet wird.",
+      usage: [
+        "Erfassung von Sensordaten",
+        "Kommunikation mit Raspberry Pi",
+        "Drahtlose Datenübertragung",
+      ],
+    },
+  ];
+
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ')
@@ -93,7 +241,138 @@ export default function Docs() {
         <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             
-            {/* Your content */}
+            <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                <div className="mb-10">
+                  <h1 className="text-3xl font-bold text-white">Programmiersprachen</h1>
+                  <p className="mt-2 text-gray-400">
+                    Übersicht der eingesetzten Programmiersprachen im Projekt.
+                  </p>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {programmingLanguages.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold text-white">
+                          {tech.name}
+                        </h2>
+                        <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-medium text-indigo-300">
+                          {tech.category}
+                        </span>
+                      </div>
+
+                      <p className="mt-4 text-sm text-gray-400">
+                        {tech.description}
+                      </p>
+
+                      <div className="mt-5">
+                        <h3 className="text-sm font-semibold text-gray-200">
+                          Verwendung im Projekt
+                        </h3>
+
+                        <ul className="mt-2 space-y-2 text-sm text-gray-400">
+                          {tech.usage.map((item) => (
+                            <li key={item} className="flex gap-2">
+                              <span className="text-indigo-400">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                <div className="mb-10">
+                  <h1 className="text-3xl font-bold text-white">Technologien & Bibiotheken im Detail</h1>
+                  <p className="mt-2 text-gray-400">
+                    Übersicht der eingesetzten Technologien im Projekt.
+                  </p>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {technologies.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold text-white">
+                          {tech.name}
+                        </h2>
+                        <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-medium text-indigo-300">
+                          {tech.category}
+                        </span>
+                      </div>
+
+                      <p className="mt-4 text-sm text-gray-400">
+                        {tech.description}
+                      </p>
+
+                      <div className="mt-5">
+                        <h3 className="text-sm font-semibold text-gray-200">
+                          Verwendung im Projekt
+                        </h3>
+
+                        <ul className="mt-2 space-y-2 text-sm text-gray-400">
+                          {tech.usage.map((item) => (
+                            <li key={item} className="flex gap-2">
+                              <span className="text-indigo-400">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                <div className="mb-10">
+                  <h1 className="text-3xl font-bold text-white">Hardware</h1>
+                  <p className="mt-2 text-gray-400">
+                    Übersicht der eingesetzten Hardware im Projekt.
+                  </p>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {hardware.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg"
+                    >
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-xl font-semibold text-white">
+                          {tech.name}
+                        </h2>
+                        <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-medium text-indigo-300">
+                          {tech.category}
+                        </span>
+                      </div>
+
+                      <p className="mt-4 text-sm text-gray-400">
+                        {tech.description}
+                      </p>
+
+                      <div className="mt-5">
+                        <h3 className="text-sm font-semibold text-gray-200">
+                          Verwendung im Projekt
+                        </h3>
+
+                        <ul className="mt-2 space-y-2 text-sm text-gray-400">
+                          {tech.usage.map((item) => (
+                            <li key={item} className="flex gap-2">
+                              <span className="text-indigo-400">•</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             
             </div>
         </main>

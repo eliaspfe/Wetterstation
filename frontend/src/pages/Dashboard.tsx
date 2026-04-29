@@ -105,7 +105,7 @@ export default function Dashboard() {
         </header> */}
         <main>
           <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <div className="bg-gray-800 p-4 rounded-xl shadow gap-4 mb-4">
+            <div className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg gap-6 mb-6">
                 <h2 className="text-gray-300 font-semibold mb-2">Einstellungen</h2>
                   <div className="grid grid-cols-8 gap-4">
                     <div className="relative inline-block">
@@ -158,20 +158,20 @@ export default function Dashboard() {
                     <div><DeleteModal/></div>
                   </div>
               </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-800 p-4 rounded-xl shadow">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg">
                 <h2 className="text-gray-300 font-semibold mb-2">Temperatur nach Zeit</h2>
                 <ChartTemp trunc={trunc}/>
               </div>
-              <div className="bg-gray-800 p-4 rounded-xl shadow">
+              <div className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg">
                 <h2 className="text-gray-300 font-semibold mb-2">Luftfeuchtigkeit nach Zeit</h2>
                 <ChartHum trunc={trunc}/>
               </div>
-                <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <div className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg">
                 <h2 className="text-gray-300 font-semibold mb-2">Helligkeit nach Zeit</h2>
                 <ChartLight trunc={trunc}/>
               </div>
-                <div className="bg-gray-800 p-4 rounded-xl shadow">
+                <div className="rounded-2xl border border-white/10 bg-gray-800/50 p-6 shadow-lg">
                 <h2 className="text-gray-300 font-semibold mb-2">Luftdruck nach Zeit</h2>
                 <ChartPres trunc={trunc}/>
               </div>

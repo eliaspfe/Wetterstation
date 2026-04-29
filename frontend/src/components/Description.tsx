@@ -2,7 +2,7 @@
 //TODO: Finish Column Description
 export default function Description() {
   return (
-    <div>
+    <>
       <div className="px-4 sm:px-0">
         <h3 className="text-base/7 font-semibold text-white">Spaltenbeschreibung der Daten</h3>
       </div>
@@ -35,6 +35,6 @@ export default function Description() {
 
         </dl>
       </div>
-    </div>
+    </>
   )
 }
